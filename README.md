@@ -1,5 +1,7 @@
 # 🎮 Modern Tetris Game
 
+![Tetris Game with AI](tetris-game-ai.gif)
+
 A feature-rich Tetris game built with vanilla JavaScript and HTML5 Canvas, featuring modern effects, particle systems, and AI player.
 
 ![Tetris Game](https://img.shields.io/badge/Game-Tetris-purple)
