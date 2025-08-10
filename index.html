@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="side-panel left-panel">
+            <div class="hold-box">
+                <h3>Hold</h3>
+                <canvas id="holdCanvas"></canvas>
+                <div class="hold-hint">C</div>
+            </div>
+            <div class="stats-box">
+                <h3>Stats</h3>
+                <div class="stat-item">
+                    <span>Time</span>
+                    <span id="time">0:00</span>
+                </div>
+                <div class="stat-item">
+                    <span>PPM</span>
+                    <span id="ppm">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>APM</span>
+                    <span id="apm">0</span>
+                </div>
+            </div>
+            <div class="ai-box">
+                <h3>AI Player</h3>
+                <div class="ai-controls">
+                    <button id="aiToggle" class="ai-button">Enable AI</button>
+                    <select id="aiDifficulty" class="ai-select">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard" selected>Hard</option>
+                        <option value="impossible">IMPOSSIBLE</option>
+                    </select>
+                </div>
+                <div class="ai-status">
+                    <span id="aiStatus">🤖 OFF</span>
+                </div>
+            </div>
+        </div>
+        <div class="game-area">
+            <canvas id="gameCanvas"></canvas>
+            <div id="pauseOverlay" class="pause-overlay hidden">
+                <h2>PAUSED</h2>
+                <div class="menu-options">
+                    <button id="resumeBtn">Resume (P)</button>
+                    <button id="restartBtn">Restart (R)</button>
+                    <button id="settingsBtn">Settings</button>
+                </div>
+            </div>
+            <div id="gameOverOverlay" class="game-over-overlay hidden">
+                <h2>GAME OVER</h2>
+                <div class="final-stats">
+                    <div class="stat-row">Score: <span id="finalScore">0</span></div>
+                    <div class="stat-row">Lines: <span id="finalLines">0</span></div>
+                    <div class="stat-row">Level: <span id="finalLevel">0</span></div>
+                    <div class="stat-row">Time: <span id="finalTime">0:00</span></div>
+                </div>
+                <div class="high-scores">
+                    <h3>High Scores</h3>
+                    <ol id="highScoresList"></ol>
+                </div>
+                <button id="playAgainBtn">Play Again</button>
+            </div>
+        </div>
+        <div class="side-panel right-panel">
+            <div class="score-box">
+                <h3>Score</h3>
+                <div id="score">0</div>
+            </div>
+            <div class="level-box">
+                <h3>Level</h3>
+                <div id="level">1</div>
+            </div>
+            <div class="lines-box">
+                <h3>Lines</h3>
+                <div id="lines">0</div>
+            </div>
+            <div class="next-box">
+                <h3>Next</h3>
+                <canvas id="nextCanvas"></canvas>
+                <canvas id="nextCanvas2"></canvas>
+                <canvas id="nextCanvas3"></canvas>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="instructions">
+                <p>← → Move | ↓ Soft Drop | ↑/X Rotate CW | Z Rotate CCW | Space Hard Drop | C Hold | P Pause | M Mute</p>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

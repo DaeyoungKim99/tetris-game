@@ -1,0 +1,526 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Orbitron', monospace;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+    animation: backgroundPulse 10s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+}
+
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.game-container {
+    display: flex;
+    gap: 30px;
+    padding: 30px;
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 100px rgba(120, 119, 198, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: containerGlow 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+.game-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes containerGlow {
+    0%, 100% { box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 100px rgba(120, 119, 198, 0.3); }
+    50% { box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 150px rgba(255, 119, 198, 0.4); }
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.left-panel {
+    order: 1;
+}
+
+.right-panel {
+    order: 3;
+}
+
+.game-area {
+    order: 2;
+}
+
+.score-box, .level-box, .lines-box, .next-box, .hold-box, .stats-box, .ai-box {
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.score-box::before, .level-box::before, .lines-box::before, .next-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%
+    );
+    transform: rotate(45deg);
+    transition: all 0.5s;
+    opacity: 0;
+}
+
+.score-box:hover::before, .level-box:hover::before, 
+.lines-box:hover::before, .next-box:hover::before {
+    animation: shimmer 0.5s ease-out;
+    opacity: 1;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) translateY(-100%); }
+    100% { transform: translateX(100%) translateY(100%); }
+}
+
+.score-box:hover, .level-box:hover, .lines-box:hover, .next-box:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 
+        0 15px 40px rgba(120, 119, 198, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 30px rgba(120, 119, 198, 0.3);
+    border-color: rgba(120, 119, 198, 0.5);
+}
+
+.score-box h3, .level-box h3, .lines-box h3, .next-box h3 {
+    margin-bottom: 15px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 10px rgba(120, 119, 198, 0.5);
+}
+
+#score, #level, #lines {
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, #a8edea 50%, #fed6e3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+    animation: numberGlow 2s ease-in-out infinite;
+}
+
+@keyframes numberGlow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+}
+
+#nextCanvas {
+    margin-top: 15px;
+    filter: drop-shadow(0 0 10px rgba(120, 119, 198, 0.5));
+}
+
+#gameCanvas {
+    border: 2px solid transparent;
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.95)),
+        linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    border-radius: 10px;
+    box-shadow: 
+        0 0 50px rgba(120, 119, 198, 0.5),
+        inset 0 0 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+#gameCanvas::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
+    border-radius: 10px;
+    opacity: 0.5;
+    z-index: -1;
+    animation: borderRotate 3s linear infinite;
+}
+
+@keyframes borderRotate {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+.controls {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+.instructions {
+    background: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(10px);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 15px 20px;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    animation: instructionsPulse 2s ease-in-out infinite;
+    white-space: nowrap;
+}
+
+@keyframes instructionsPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.8) translateY(30px); 
+        filter: blur(10px);
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+        filter: blur(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.hold-box {
+    position: relative;
+}
+
+.hold-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#holdCanvas, #nextCanvas2, #nextCanvas3 {
+    margin-top: 10px;
+    filter: drop-shadow(0 0 10px rgba(120, 119, 198, 0.5));
+}
+
+.stats-box .stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.stats-box .stat-item span:last-child {
+    font-weight: bold;
+    color: #a8edea;
+}
+
+.pause-overlay, .game-over-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    border-radius: 20px;
+    padding: 40px;
+    min-width: 400px;
+    box-shadow: 0 0 50px rgba(255, 0, 110, 0.3);
+}
+
+.pause-overlay.hidden, .game-over-overlay.hidden {
+    display: none;
+}
+
+.pause-overlay h2, .game-over-overlay h2 {
+    font-size: 48px;
+    background: linear-gradient(135deg, #ff006e, #8338ec);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 30px;
+    text-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+}
+
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-options button, #playAgainBtn {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    min-width: 200px;
+}
+
+#playAgainBtn {
+    margin-top: 20px;
+    background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(131, 56, 236, 0.3));
+    border-color: #ff006e;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.menu-options button:hover, #playAgainBtn:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(131, 56, 236, 0.3));
+    border-color: #ff006e;
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+}
+
+.final-stats {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px 40px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-row {
+    margin: 10px 0;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-row span {
+    color: #a8edea;
+    font-weight: bold;
+}
+
+.high-scores {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    min-width: 300px;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.high-scores h3 {
+    margin-bottom: 15px;
+    color: #ff006e;
+    text-align: center;
+}
+
+#highScoresList {
+    list-style: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+#highScoresList li {
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#highScoresList li:first-child {
+    color: #FFD700;
+    font-weight: bold;
+}
+
+#highScoresList li:nth-child(2) {
+    color: #C0C0C0;
+}
+
+#highScoresList li:nth-child(3) {
+    color: #CD7F32;
+}
+
+.ai-box {
+    border: 2px solid rgba(255, 0, 110, 0.3);
+    animation: aiGlow 2s ease-in-out infinite;
+}
+
+@keyframes aiGlow {
+    0%, 100% { 
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 20px rgba(255, 0, 110, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 40px rgba(255, 0, 110, 0.4);
+    }
+}
+
+.ai-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.ai-button {
+    background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(131, 56, 236, 0.2));
+    border: 1px solid rgba(255, 0, 110, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 25px;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ai-button:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 110, 0.4), rgba(131, 56, 236, 0.4));
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+}
+
+.ai-button.active {
+    background: linear-gradient(135deg, #ff006e, #8338ec);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.ai-select {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px;
+    border-radius: 10px;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    outline: none;
+}
+
+.ai-select option {
+    background: #1a1a1a;
+}
+
+.ai-status {
+    text-align: center;
+    font-size: 14px;
+    color: #a8edea;
+    margin-top: 10px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(168, 237, 234, 0.5);
+}
+
+.ai-status.active {
+    color: #ff006e;
+    animation: pulse 1s ease-in-out infinite;
+}
